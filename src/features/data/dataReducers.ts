@@ -47,7 +47,7 @@ const defaultPageSize = 10;
 
 export const fetchDataAsync = createAsyncThunk(
     'data/fetchDataAsync',
-    async ({ offset }: { offset: number }): Promise<JobList> => {
+    async (offset: number): Promise<JobList> => {
         const response = await fetchJobResolver(defaultPageSize, offset)
         return response
     }
@@ -100,4 +100,5 @@ const dataSlice = createSlice({
     }
 })
 
-export default initialState
+export const { changeRoles } = dataSlice.actions
+export default dataSlice.reducer

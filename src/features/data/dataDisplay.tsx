@@ -4,6 +4,9 @@ import { changeRoles, fetchDataAsync } from "./dataReducers";
 import { Job, JobList } from "./dataAPI";
 import { Button } from "@mui/material";
 import filters from "./components/filters";
+import myCard from "./components/card";
+import CardVariants from "./components/card";
+import JobListing from "./components/card";
 
 
 const DataDisplay = () => {
@@ -25,15 +28,20 @@ const DataDisplay = () => {
                 <div>{data.jdLink}
                  { " "+ data.jobRole}
                 </div>
-                <div>{roles}</div>
+              
+
             </div>
+
         )
     })
     
     return (
         <div> 
             {filters()}
-            {renderData} </div>
+            <div>{roles}</div>
+            {renderData}
+            {JobListing()}
+             </div>
     )
 }
 

@@ -2,39 +2,39 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { JobList, fetchJobResolver } from "./dataAPI"
 
 export interface DataState {
-    loading: boolean
-    loadingMore: boolean
-    data: any
-    shownData: any
-    error: string
-    offset: number
-
-    // Fillter
-
-    roles: string[]
-    noOfEmployees: string[]
-    experience?: number
-    remote: string[]
-    techStack: string[]
-    minSalary: string
-    companyName: string
+    loading: boolean;
+    loadingMore: boolean;
+    data: any[];
+    shownData: any[];
+    error: string;
+    offset: number;
+    hasMore: boolean;
+    // Filters
+    roles: string[];
+    location: string[];
+    minExperience?: number;
+    remote: string[];
+    techStack: string[];
+    minSalary?: number;
+    companyName?: string;
 }
 
-const inistialState: DataState = {
+
+const initialState: DataState = {
     loading: false,
     loadingMore: false,
     data: [],
     shownData: [],
     error: "",
     offset: 0,
-
+    hasMore: true,
     // Filter
     roles: [],
-    noOfEmployees: [],
-    experience: undefined,
+    minExperience: undefined,
+    location: [],
     remote: [],
     techStack: [],
-    minSalary: "",
+    minSalary: undefined,
     companyName: ""
 }
 
@@ -47,12 +47,26 @@ export const fetchDataAsync = createAsyncThunk(
     }
 )
 
+const filterData = (state: DataState) => {
+    return state.data;
+}
 
 const dataSlice = createSlice({
     name: "data",
-    initialState: inistialState,
+    initialState: initialState,
     reducers: {
-        
+        changeRoles(state, action: { payload: string[] }) {
+            return {
+                ...state,
+                roles: action.payload
+            }
+        },
+        reloadFilteredData(state, action) {
+            return {
+                ...state,
+                shownData: filterData(state) // TODO: Add filteres
+            }
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -62,6 +76,7 @@ const dataSlice = createSlice({
             .addCase(fetchDataAsync.fulfilled, (state, action) => {
                 state.loading = false
                 state.data = state.data.concat(action.payload.jdList)
+                // filter data
             })
             .addCase(fetchDataAsync.rejected, (state, action) => {
                 state.loading = false
@@ -72,4 +87,4 @@ const dataSlice = createSlice({
 
 
 
-export default inistialState
+export default initialState

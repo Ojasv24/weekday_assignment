@@ -31,9 +31,9 @@ export const fetchJobResolver = async (limit: number, offset: number): Promise<J
         headers: myHeaders,
         body: raw,
     };
+
     const response = await fetch('https://api.weekday.technology/adhoc/getSampleJdJSON',
         requestOptions);
-
 
     const data = await response.json();
     return data;

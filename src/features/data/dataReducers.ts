@@ -1,15 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { JobList, fetchJobResolver } from "./dataAPI"
+import { Job, JobList, fetchJobResolver } from "./dataAPI"
 
 export interface DataState {
     loading: boolean;
     loadingMore: boolean;
-    data: any[];
-    shownData: any[];
+    data: Job[];
+    shownData: Job[];
     error: string;
     offset: number;
     hasMore: boolean;
-    // Filters
+    filters: Filters;
+}
+
+export interface Filters {
     roles: string[];
     location: string[];
     minExperience?: number;
@@ -29,13 +32,15 @@ const initialState: DataState = {
     offset: 0,
     hasMore: true,
     // Filter
-    roles: [],
-    minExperience: undefined,
-    location: [],
-    remote: [],
-    techStack: [],
-    minSalary: undefined,
-    companyName: ""
+    filters: {
+        roles: [],
+        minExperience: undefined,
+        location: [],
+        remote: [],
+        techStack: [],
+        minSalary: undefined,
+        companyName: ""
+    }
 }
 
 
@@ -47,8 +52,9 @@ export const fetchDataAsync = createAsyncThunk(
     }
 )
 
-const filterData = (state: DataState) => {
-    return state.data;
+const filterData = (data: Job[], filters: Filters) => {
+    // return state.data;
+    return data;
 }
 
 const dataSlice = createSlice({
@@ -58,13 +64,16 @@ const dataSlice = createSlice({
         changeRoles(state, action: { payload: string[] }) {
             return {
                 ...state,
-                roles: action.payload
+                filters: {
+                    ...state.filters,
+                    roles: action.payload
+                }
             }
         },
         reloadFilteredData(state, action) {
             return {
                 ...state,
-                shownData: filterData(state) // TODO: Add filteres
+                shownData: filterData(state.data, state.filters) // TODO: Add filteres
             }
         }
     },
@@ -74,9 +83,9 @@ const dataSlice = createSlice({
                 state.loading = true
             })
             .addCase(fetchDataAsync.fulfilled, (state, action) => {
-                state.loading = false
-                state.data = state.data.concat(action.payload.jdList)
-                // filter data
+                state.loading = false;
+                state.data = state.data.concat(action.payload.jdList);
+                state.shownData = filterData(state.data, state.filters);
             })
             .addCase(fetchDataAsync.rejected, (state, action) => {
                 state.loading = false

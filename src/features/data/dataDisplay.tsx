@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { changeRoles, fetchDataAsync } from "./dataReducers";
 import { Job, JobList } from "./dataAPI";
+import { Button } from "@mui/material";
+import filters from "./components/filters";
 
 
 const DataDisplay = () => {
@@ -9,6 +11,7 @@ const DataDisplay = () => {
     const data = useAppSelector((state) => state.data.data);
     const offset = useAppSelector((state) => state.data.offset);
     const [dataPresent, setDataPresent] = useState<boolean>(false);
+    const roles = useAppSelector((state) => state.data.filters.roles);
     useEffect(() => {
         if (!dataPresent) {
             dispatch(fetchDataAsync(offset));
@@ -22,12 +25,14 @@ const DataDisplay = () => {
                 <div>{data.jdLink}
                  { " "+ data.jobRole}
                 </div>
+                <div>{roles}</div>
             </div>
         )
     })
     
     return (
         <div> 
+            {filters()}
             {renderData} </div>
     )
 }

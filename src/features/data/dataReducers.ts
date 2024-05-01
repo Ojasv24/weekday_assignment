@@ -43,11 +43,12 @@ const initialState: DataState = {
     }
 }
 
+const defaultPageSize = 10;
 
 export const fetchDataAsync = createAsyncThunk(
     'data/fetchDataAsync',
-    async ({ limit, offset }: { limit: number, offset: number }): Promise<JobList> => {
-        const response = await fetchJobResolver(limit, offset)
+    async ({ offset }: { offset: number }): Promise<JobList> => {
+        const response = await fetchJobResolver(defaultPageSize, offset)
         return response
     }
 )
@@ -83,9 +84,14 @@ const dataSlice = createSlice({
                 state.loading = true
             })
             .addCase(fetchDataAsync.fulfilled, (state, action) => {
-                state.loading = false;
-                state.data = state.data.concat(action.payload.jdList);
-                state.shownData = filterData(state.data, state.filters);
+                return {
+                    ...state,
+                    loading: false,
+                    offset: state.offset + action.payload.jdList.length,
+                    hasMore: action.payload.jdList.length === defaultPageSize,
+                    data: action.payload.jdList,
+                    shownData: filterData(action.payload.jdList, state.filters),
+                }
             })
             .addCase(fetchDataAsync.rejected, (state, action) => {
                 state.loading = false
@@ -93,7 +99,5 @@ const dataSlice = createSlice({
             })
     }
 })
-
-
 
 export default initialState

@@ -1,4 +1,4 @@
-export type JobInterface = {
+export type Job = {
     jdUid: string;
     jdLink: string;
     jobDetailsFromCompany: string;
@@ -12,7 +12,7 @@ export type JobInterface = {
 }
 
 export type JobList = {
-    jdList: JobInterface[]
+    jdList: Job[]
     totalCount: number
 }
 

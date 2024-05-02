@@ -55,7 +55,15 @@ export const fetchDataAsync = createAsyncThunk(
 
 const filterData = (data: Job[], filters: Filters) => {
     // return state.data;
-    return data;
+    var finalData = [];
+    if (filters.roles.length > 0) {
+        finalData = data.filter((job) => {
+            return filters.roles.includes(job.jobRole.toLocaleLowerCase())
+        })
+        console.log(filters.roles);
+        return finalData;
+    }
+    return data
 }
 
 const dataSlice = createSlice({
@@ -100,5 +108,5 @@ const dataSlice = createSlice({
     }
 })
 
-export const { changeRoles } = dataSlice.actions
+export const { changeRoles, reloadFilteredData } = dataSlice.actions
 export default dataSlice.reducer

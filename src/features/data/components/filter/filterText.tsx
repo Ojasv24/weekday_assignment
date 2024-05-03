@@ -7,6 +7,7 @@ const filtersText = (title: string, onChange: (value: string[]) => void) => {
         size="small"
         clearIcon={false}
         options={[]}
+        style={{ width: "100%" }}
         freeSolo
         multiple
         onChange={(_, value) => onChange(value)}

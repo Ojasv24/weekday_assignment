@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { fetchDataAsync } from "./dataReducers"
 import { Job } from "./dataAPI"
-import { Grid } from "@mui/material"
+import { CircularProgress, Grid } from "@mui/material"
 import CardVariants from "./components/card"
 
 const DataDisplay = () => {
@@ -47,7 +47,7 @@ const DataDisplay = () => {
   })
 
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <div style={{ padding: "20px" }}>
         <Grid
           // direction="column"
@@ -60,7 +60,9 @@ const DataDisplay = () => {
           {renderData}
         </Grid>
       </div>
-      <div ref={loaderRef}>{hasMore ? "Loading..." : ""}</div>
+      <div style={{ alignSelf: "center" }} ref={loaderRef}>
+        {hasMore ? <CircularProgress /> : null}
+      </div>
     </div>
   )
 }

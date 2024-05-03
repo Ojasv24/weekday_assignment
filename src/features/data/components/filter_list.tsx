@@ -21,6 +21,7 @@ const Filters = () => {
       style={{
         // justifyContent: "start",
         // width: "100%",
+        padding: "10px",
         display: "flex",
       }}
     >

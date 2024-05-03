@@ -1,7 +1,8 @@
 import { Card } from "@mui/material"
-import filters from "./features/data/components/filters"
+import filters from "./features/data/components/filter_list"
 import DataDisplay from "./features/data/dataDisplay"
-import Filters from "./features/data/components/filters"
+import Filters from "./features/data/components/filter_list"
+import SearchJobText from "./features/data/components/search_job_text"
 
 const App = () => {
   return (
@@ -23,19 +24,7 @@ const App = () => {
       >
         <div style={{ padding: "10px" }}>👋 Ojasv</div>
       </Card>
-      <div
-        style={{
-          marginTop: "20px",
-          marginBottom: "20px",
-          fontWeight: "bold",
-          fontSize: "24px",
-          alignSelf: "center",
-          textDecorationLine: "underline",
-          textDecorationColor: "blue",
-        }}
-      >
-        Search Jobs
-      </div>
+      <SearchJobText></SearchJobText>
       <Filters />
       <DataDisplay />
     </div>

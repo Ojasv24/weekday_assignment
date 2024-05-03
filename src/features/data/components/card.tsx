@@ -1,14 +1,19 @@
 // import { Box, Card, CardContent, Typography } from '@mui/joy';
-import Button from "@mui/material/Button"
+import Button, { ButtonProps } from "@mui/material/Button"
 import Chip from "@mui/material/Chip"
 import * as React from "react"
 import { Job } from "../dataAPI"
 import Card from "@mui/material/Card"
 import AboutCompany from "./cards/about_company"
-// import Box from '@mui/joy/Box';
-// import Card from '@mui/joy/Card';
-// import CardContent from '@mui/joy/CardContent';
-// import Typography from '@mui/joy/Typography';
+import styled from "@emotion/styled"
+import { purple } from "@mui/material/colors"
+
+const ColorButton = styled(Button)<ButtonProps>(() => ({
+  backgroundColor: "rgb(85, 239, 196)",
+  "&:hover": {
+    backgroundColor: "rgb(85, 220, 196)",
+  },
+}))
 
 export default function JobCard({ job }: { job: Job }) {
   const imageURl =
@@ -123,7 +128,7 @@ export default function JobCard({ job }: { job: Job }) {
         >
           {job.minExp} years
         </h2>
-        <Button
+        <ColorButton
           variant="contained"
           sx={{
             marginTop: "10px",
@@ -133,7 +138,7 @@ export default function JobCard({ job }: { job: Job }) {
           }}
         >
           ⚡ Easy Apply
-        </Button>
+        </ColorButton>
       </div>
     </Card>
   )

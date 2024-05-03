@@ -91,61 +91,62 @@ const filterData = (data: Job[], filters: Filters) => {
     return finalData;
 }
 
+const filterState = (state: DataState) => {
+    return {
+        ...state,
+        shownData: filterData(state.data, state.filters)
+    }
+}
+
 const dataSlice = createSlice({
     name: "data",
     initialState: initialState,
     reducers: {
         changeRoles(state, action: { payload: string[] }) {
-            return {
+            return filterState({
                 ...state,
                 filters: {
                     ...state.filters,
                     roles: action.payload
                 }
-            }
+            })
         },
         changeminExprience(state, action: { payload: number[] }) {
-            return {
+            return filterState({
                 ...state,
                 filters: {
                     ...state.filters,
                     minExperience: action.payload
                 }
-            }
+            })
         },
         changeminSalary(state, action: { payload: number[] }) {
-            return {
+            return filterState({
                 ...state,
                 filters: {
                     ...state.filters,
                     minSalary: action.payload
                 }
-            }
+            })
         },
         changelocation(state, action: { payload: string[] }) {
-            return {
+            return filterState({
                 ...state,
                 filters: {
                     ...state.filters,
                     location: action.payload
                 }
-            }
+            })
         },
         changeRemote(state, action: { payload: string[] }) {
-            return {
+            return filterState({
                 ...state,
                 filters: {
                     ...state.filters,
                     remote: action.payload
                 }
-            }
+            })
         },
-        reloadFilteredData(state, action) {
-            return {
-                ...state,
-                shownData: filterData(state.data, state.filters) // TODO: Add filteres
-            }
-        }
     },
     extraReducers: (builder) => {
         builder
@@ -170,5 +171,5 @@ const dataSlice = createSlice({
     }
 })
 
-export const { changeRoles, changeminExprience, changeminSalary, changelocation, reloadFilteredData, changeRemote } = dataSlice.actions
+export const { changeRoles, changeminExprience, changeminSalary, changelocation, changeRemote } = dataSlice.actions
 export default dataSlice.reducer

@@ -1,8 +1,13 @@
 import { Autocomplete, Chip, TextField } from "@mui/material"
 
-const filtersText = (title: string, onChange: (value: string[]) => void) => {
+interface FilterProps {
+  title: string
+  onChange: (value: string[]) => void
+}
+
+export default function FilterText({ title, onChange }: FilterProps) {
   return (
-    <div style={{ padding: "10px" }}>
+    <div style={{ padding: "10px", width: "100%" }}>
       <Autocomplete
         size="small"
         clearIcon={false}
@@ -16,10 +21,8 @@ const filtersText = (title: string, onChange: (value: string[]) => void) => {
             <Chip label={option} {...props({ index })} />
           ))
         }
-        renderInput={params => <TextField label="Locations" {...params} />}
+        renderInput={params => <TextField label={title} {...params} />}
       />
     </div>
   )
 }
-
-export default filtersText

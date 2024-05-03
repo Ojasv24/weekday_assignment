@@ -6,10 +6,10 @@ import {
   changelocation,
   changeminExprience,
   changeminSalary,
-  reloadFilteredData,
 } from "../dataReducers"
 import { useAppDispatch } from "../../../app/hooks"
 import filtersText from "./filter/filterText"
+import FilterText from "./filter/filterText"
 const Filters = () => {
   const topRoles = ["frontend", "ios", "android", "backend"]
   const topMinExp = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
@@ -19,33 +19,41 @@ const Filters = () => {
   return (
     <Card
       style={{
-        // justifyContent: "start",
-        // width: "100%",
         padding: "10px",
         display: "flex",
+        flexDirection: "column",
+        flexWrap: "wrap",
       }}
     >
-      {/* <div>Filters</div> */}
-      {Filter(topRoles, "Roles", value => {
-        dispatch(changeRoles(value))
-        dispatch(reloadFilteredData([]))
-      })}
-      {Filter(topMinExp, "Minimum Experience", value => {
-        dispatch(changeminExprience(value))
-        dispatch(reloadFilteredData([]))
-      })}
-      {Filter(topMinSalary, "Minimum Salary", value => {
-        dispatch(changeminSalary(value))
-        dispatch(reloadFilteredData([]))
-      })}
-      {Filter(topRemote, "Remote", value => {
-        dispatch(changeRemote(value))
-        dispatch(reloadFilteredData([]))
-      })}
-      {filtersText("Locations", value => {
-        dispatch(changelocation(value))
-        dispatch(reloadFilteredData([]))
-      })}
+      <div style={{ alignSelf: "center" }}>
+        Filters
+      </div>
+      <div style={{ display: "flex", flex: 1, flexDirection: "row",  }}>
+        <Filter
+          topRoles={topRoles}
+          title="Roles"
+          onChange={value => dispatch(changeRoles(value))}
+        ></Filter>
+        <Filter
+          topRoles={topMinExp}
+          title="Minimum Experience"
+          onChange={value => dispatch(changeminExprience(value))}
+        ></Filter>
+        <Filter
+          topRoles={topMinSalary}
+          title="Minimum Salary"
+          onChange={value => dispatch(changeminSalary(value))}
+        ></Filter>
+        <Filter
+          topRoles={topRemote}
+          title="Remote"
+          onChange={value => dispatch(changeRemote(value))}
+        ></Filter>
+        <FilterText
+          title="Location"
+          onChange={value => dispatch(changelocation(value))}
+        ></FilterText>
+      </div>
     </Card>
   )
 }

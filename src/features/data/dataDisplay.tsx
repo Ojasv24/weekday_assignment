@@ -50,7 +50,6 @@ const DataDisplay = () => {
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div style={{ padding: "20px" }}>
         <Grid
-          // direction="column"
           alignItems="center"
           justifyContent="center"
           sx={{}}

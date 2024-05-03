@@ -51,6 +51,7 @@ export const fetchJobAsync = createAsyncThunk(
     }
 )
 
+// Filters a list of jobs based on the filters
 const filterJob = (job: Job[], filters: Filters) => {
     let finalJob: Job[] = [...job];
 
@@ -96,6 +97,7 @@ const filterJob = (job: Job[], filters: Filters) => {
     return finalJob;
 }
 
+// Filters shownJob in the state based on the filters in the state
 const filterState = (state: JobState) => {
     return {
         ...state,

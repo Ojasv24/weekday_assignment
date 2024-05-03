@@ -21,6 +21,7 @@ const JobDisplay = () => {
     fetchJob()
   }, [])
 
+  // Infinite scroll
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
       const target = entries[0]

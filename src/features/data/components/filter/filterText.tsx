@@ -1,18 +1,18 @@
 import { Autocomplete, Chip, TextField } from "@mui/material"
 
 interface FilterProps {
+  minWidth?: number
   title: string
   onChange: (value: string[]) => void
 }
 
-export default function FilterText({ title, onChange }: FilterProps) {
+export default function FilterText({ title, onChange, minWidth }: FilterProps) {
   return (
-    <div style={{ padding: "10px", width: "100%" }}>
+    <div style={{ padding: "10px", minWidth: minWidth }}>
       <Autocomplete
         size="small"
         clearIcon={false}
         options={[]}
-        style={{ width: "100%" }}
         freeSolo
         multiple
         onChange={(_, value) => onChange(value)}

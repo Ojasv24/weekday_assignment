@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, Typography } from "@mui/material"
 import Filter from "./filter/filter"
 import {
+  changeCompanyName,
   changeRemote,
   changeRoles,
   changelocation,
@@ -22,36 +23,50 @@ const Filters = () => {
         padding: "10px",
         display: "flex",
         flexDirection: "column",
-        flexWrap: "wrap",
       }}
     >
-      <div style={{ alignSelf: "center" }}>
-        Filters
-      </div>
-      <div style={{ display: "flex", flex: 1, flexDirection: "row",  }}>
+      <div style={{ alignSelf: "center" }}>Filters</div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "center",
+        }}
+      >
         <Filter
+          minWidth={100}
           topRoles={topRoles}
           title="Roles"
           onChange={value => dispatch(changeRoles(value))}
         ></Filter>
         <Filter
+          minWidth={200}
           topRoles={topMinExp}
           title="Minimum Experience"
           onChange={value => dispatch(changeminExprience(value))}
         ></Filter>
         <Filter
+          minWidth={200}
           topRoles={topMinSalary}
           title="Minimum Salary"
           onChange={value => dispatch(changeminSalary(value))}
         ></Filter>
         <Filter
+          minWidth={100}
           topRoles={topRemote}
           title="Remote"
           onChange={value => dispatch(changeRemote(value))}
         ></Filter>
         <FilterText
+          minWidth={200}
           title="Location"
           onChange={value => dispatch(changelocation(value))}
+        ></FilterText>
+        <FilterText
+          minWidth={200}
+          title="Company Name"
+          onChange={value => dispatch(changeCompanyName(value))}
         ></FilterText>
       </div>
     </Card>

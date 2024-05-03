@@ -9,6 +9,9 @@ export type Job = {
     minExp: number;
     maxExp: number;
     jobRole: string;
+    companyName?: string;
+    logoUrl?: string;
+
 }
 
 export type JobList = {

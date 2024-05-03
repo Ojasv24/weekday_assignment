@@ -18,7 +18,7 @@ export interface Filters {
     remote: string[];
     techStack: string[];
     minSalary: number[];
-    companyName?: string;
+    companyName: string[];
 }
 
 
@@ -37,7 +37,7 @@ const initialState: DataState = {
         remote: [],
         techStack: [],
         minSalary: [],
-        companyName: ""
+        companyName: [],
     }
 }
 
@@ -87,6 +87,11 @@ const filterData = (data: Job[], filters: Filters) => {
         });
     }
 
+    if (filters.companyName && filters.companyName.length > 0) {
+        finalData = finalData.filter(job => {
+            return filters.companyName.some(company => job.companyName!.toLowerCase().includes(company.toLowerCase()));
+        })
+    }
 
     return finalData;
 }
@@ -108,6 +113,15 @@ const dataSlice = createSlice({
                 filters: {
                     ...state.filters,
                     roles: action.payload
+                }
+            })
+        },
+        changeCompanyName(state, action: { payload: string[] }) {
+            return filterState({
+                ...state,
+                filters: {
+                    ...state.filters,
+                    companyName: action.payload
                 }
             })
         },
@@ -171,5 +185,5 @@ const dataSlice = createSlice({
     }
 })
 
-export const { changeRoles, changeminExprience, changeminSalary, changelocation, changeRemote } = dataSlice.actions
+export const { changeRoles, changeminExprience, changeminSalary, changelocation, changeRemote, changeCompanyName } = dataSlice.actions
 export default dataSlice.reducer

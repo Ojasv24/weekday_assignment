@@ -17,6 +17,7 @@ const ColorButton = styled(Button)<ButtonProps>(() => ({
 
 export default function JobCard({ job }: { job: Job }) {
   const imageURl =
+    job.logoUrl ??
     "https://media.licdn.com/dms/image/C560BAQE7jsHudoGH6A/company-logo_200_200/0/1630638631345?e=2147483647&v=beta&t=GUeBX5s3s1_mC__QR1VHxCFvoIPPW_OK22HfP7KmUsA"
   return (
     //give shawdow
@@ -55,7 +56,7 @@ export default function JobCard({ job }: { job: Job }) {
                 marginBottom: "3px",
               }}
             >
-              Company Name
+              {job.companyName ?? "Company Name"}
             </h3>
             <h2
               style={{
@@ -116,7 +117,7 @@ export default function JobCard({ job }: { job: Job }) {
             marginTop: "10px",
           }}
         >
-          Minimum Experience
+          {job.minExp != null ? "Minimum Experience" : null}
         </h3>
         <h2
           style={{
@@ -126,7 +127,7 @@ export default function JobCard({ job }: { job: Job }) {
             margin: "0px",
           }}
         >
-          {job.minExp} years
+          {job.minExp} {job.minExp != null ? "years" : null}
         </h2>
         <ColorButton
           variant="contained"

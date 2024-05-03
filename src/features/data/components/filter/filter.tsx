@@ -3,15 +3,21 @@ import Autocomplete from "@mui/material/Autocomplete"
 import TextField from "@mui/material/TextField"
 
 interface FilterProps {
+  minWidth?: number
   topRoles: any[]
   title: string
   onChange: (value: any[]) => void
 }
 
-export default function Filter({ topRoles, title, onChange }: FilterProps) {
+export default function Filter({
+  topRoles,
+  title,
+  minWidth,
+  onChange,
+}: FilterProps) {
   return (
     <Autocomplete
-      style={{ padding: "10px", width: "100%" }}
+      style={{ padding: "10px", minWidth: minWidth }}
       size="small"
       multiple
       options={topRoles}

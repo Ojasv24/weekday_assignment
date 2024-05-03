@@ -41,7 +41,7 @@ const DataDisplay = () => {
   const renderData = shownData.map((data: Job) => {
     return (
       <Grid item key={data.jdUid}>
-        {CardVariants(data)}
+        <CardVariants job={data} />
       </Grid>
     )
   })
@@ -49,7 +49,14 @@ const DataDisplay = () => {
   return (
     <div>
       <div style={{ padding: "20px" }}>
-        <Grid sx={{ flexGrow: 1 }} container spacing={2}>
+        <Grid
+          // direction="column"
+          alignItems="center"
+          justifyContent="center"
+          sx={{}}
+          container
+          spacing={8}
+        >
           {renderData}
         </Grid>
       </div>

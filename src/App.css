@@ -1,5 +1,13 @@
+
 .App {
   text-align: center;
+}
+
+.lexend-my {
+  font-family: "Lexend", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 12;
+  font-style: normal;
 }
 
 .App-logo {

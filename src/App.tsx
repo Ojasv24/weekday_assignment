@@ -5,7 +5,14 @@ import Filters from "./features/data/components/filters"
 
 const App = () => {
   return (
-    <div style={{ padding: "20px", display: "flex", flexDirection: "column" }}>
+    <div
+      style={{
+        padding: "20px",
+        display: "flex",
+        flexDirection: "column",
+        fontFamily: "Lexend",
+      }}
+    >
       <Card
         sx={{
           fontWeight: "bold",

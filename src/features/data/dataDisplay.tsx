@@ -1,44 +1,61 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { changeRoles, fetchDataAsync } from "./dataReducers";
-import { Job, JobList } from "./dataAPI";
-import { Button, Grid } from "@mui/material";
-import filters from "./components/filters";
-import myCard from "./components/card";
-import CardVariants from "./components/card";
-import JobListing from "./components/card";
-import Tags from "./components/filter";
-
+import { useCallback, useEffect, useRef } from "react"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { fetchDataAsync } from "./dataReducers"
+import { Job } from "./dataAPI"
+import { Grid } from "@mui/material"
+import CardVariants from "./components/card"
 
 const DataDisplay = () => {
-    const dispatch = useAppDispatch();
-    const data = useAppSelector((state) => state.data.shownData);
-    const isLoading = useAppSelector((state) => state.data.loading);
-    const offset = useAppSelector((state) => state.data.offset);
-    const [dataPresent, setDataPresent] = useState<boolean>(false);
-    const [index, setIndex] = useState(2);
-    const loaderRef = useRef(null);
-    
+  const dispatch = useAppDispatch()
+  const { loading, offset, hasMore, shownData } = useAppSelector(
+    state => state.data,
+  )
+  const loaderRef = useRef(null)
 
-    const renderData = data.map((data: Job) => {
-        return (
-            <Grid item  key={data.jdUid}>
-                {CardVariants(data)}
-            </Grid>
+  const fetchData = useCallback(async () => {
+    if (loading || !hasMore) return
+    dispatch(fetchDataAsync(offset))
+  }, [dispatch, offset, loading, hasMore])
 
-        )
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      const target = entries[0]
+      if (target.isIntersecting) {
+        fetchData()
+      }
     })
-    // const 
-   
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current)
+    }
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current)
+      }
+    }
+  }, [fetchData])
+
+  const renderData = shownData.map((data: Job) => {
     return (
-        <div> 
-            <div style={{ padding: '20px' }}>
-                <Grid sx={{ flexGrow: 1 }} container spacing={2} >
-                    {renderData}
-                </Grid>
-            </div>
-    </div>
+      <Grid item key={data.jdUid}>
+        {CardVariants(data)}
+      </Grid>
     )
+  })
+
+  return (
+    <div>
+      <div style={{ padding: "20px" }}>
+        <Grid sx={{ flexGrow: 1 }} container spacing={2}>
+          {renderData}
+        </Grid>
+      </div>
+      <div ref={loaderRef}>{hasMore ? "Loading..." : ""}</div>
+    </div>
+  )
 }
 
 export default DataDisplay

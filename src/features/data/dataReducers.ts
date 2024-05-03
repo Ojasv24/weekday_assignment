@@ -3,7 +3,6 @@ import { Job, JobList, fetchJobResolver } from "./dataAPI"
 
 export interface DataState {
     loading: boolean;
-    loadingMore: boolean;
     data: Job[];
     shownData: Job[];
     error: string;
@@ -25,7 +24,6 @@ export interface Filters {
 
 const initialState: DataState = {
     loading: false,
-    loadingMore: false,
     data: [],
     shownData: [],
     error: "",
@@ -155,13 +153,14 @@ const dataSlice = createSlice({
                 state.loading = true
             })
             .addCase(fetchDataAsync.fulfilled, (state, action) => {
+                let newData = [...state.data, ...action.payload.jdList];
                 return {
                     ...state,
                     loading: false,
                     offset: state.offset + action.payload.jdList.length,
                     hasMore: action.payload.jdList.length === defaultPageSize,
-                    data: action.payload.jdList,
-                    shownData: filterData(action.payload.jdList, state.filters),
+                    data: newData,
+                    shownData: filterData(newData, state.filters),
                 }
             })
             .addCase(fetchDataAsync.rejected, (state, action) => {

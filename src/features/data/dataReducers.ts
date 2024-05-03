@@ -55,15 +55,36 @@ export const fetchDataAsync = createAsyncThunk(
 
 const filterData = (data: Job[], filters: Filters) => {
     // return state.data;
-    var finalData = [];
+    var finalData: Job[] = [];
     if (filters.roles.length > 0) {
         finalData = data.filter((job) => {
             return filters.roles.includes(job.jobRole.toLocaleLowerCase())
         })
         console.log(filters.roles);
-        return finalData;
     }
-    return data
+    if (filters.location.length > 0) {
+        finalData = data.filter((job) => {
+            return filters.location.includes(job.location.toLocaleLowerCase())
+        })
+    }
+    if (filters.minExperience !== undefined) {
+        finalData = data.filter((job) => {
+            return job.minExp >= filters.minExperience!
+        })
+    }
+
+    if (filters.minSalary !== undefined) {
+        finalData = data.filter((job) => {
+            if (job.minJdSalary === null) {
+                return job
+            }
+            return job.minJdSalary >= filters.minSalary!
+        })
+    }
+    if (finalData.length === 0) {
+        return data
+    }
+    return finalData;
 }
 
 const dataSlice = createSlice({
@@ -76,6 +97,33 @@ const dataSlice = createSlice({
                 filters: {
                     ...state.filters,
                     roles: action.payload
+                }
+            }
+        },
+        changeminExprience(state, action: { payload: number }) {
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    minExperience: action.payload
+                }
+            }
+        },
+        changeminSalary(state, action: { payload: number }) {
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    minSalary: action.payload
+                }
+            }
+        },
+        changelocation(state, action: { payload: string[] }) {
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    location: action.payload
                 }
             }
         },
@@ -108,5 +156,5 @@ const dataSlice = createSlice({
     }
 })
 
-export const { changeRoles, reloadFilteredData } = dataSlice.actions
+export const { changeRoles, changeminExprience, changeminSalary, changelocation, reloadFilteredData } = dataSlice.actions
 export default dataSlice.reducer

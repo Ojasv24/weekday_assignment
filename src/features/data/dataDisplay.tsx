@@ -7,7 +7,7 @@ import filters from "./components/filters";
 import myCard from "./components/card";
 import CardVariants from "./components/card";
 import JobListing from "./components/card";
-import Tags from "./components/chipDropDown";
+import Tags from "./components/filter";
 
 
 const DataDisplay = () => {
@@ -31,20 +31,16 @@ const DataDisplay = () => {
 
         )
     })
-    
+    // const 
+   
     return (
         <div> 
-            {Tags()}
-            {/* <div>{roles}</div> */}
             <div style={{ padding: '20px' }}>
-            <Grid sx={{ flexGrow: 1 }} container spacing={2} >
-
-{renderData}
-</Grid>
+                <Grid sx={{ flexGrow: 1 }} container spacing={2} >
+                    {renderData}
+                </Grid>
             </div>
-            
-            
-             </div>
+    </div>
     )
 }
 

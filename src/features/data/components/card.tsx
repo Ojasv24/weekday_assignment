@@ -13,7 +13,7 @@ export default function CardVariants(job : Job) {
   return (
     //give shawdow
    
-      <Card variant="soft" sx={{ width: 300 ,   boxShadow: "0 3px 5px 2px rgba(0, 0, 0, .3)", border: 1 ,backgroundColor: "white"}}>
+      <Card variant="soft" sx={{ width: 300 ,   boxShadow: "0 3px 5px 2px rgba(0, 0, 0, .3)",backgroundColor: "white"}}>
         <div style={{display: "flex", flexDirection: "column"}}>
             
         <div style={{display: "flex", flexDirection: "row", }}>
@@ -23,10 +23,10 @@ export default function CardVariants(job : Job) {
                 <div style={{fontWeight: "bold", fontSize: "16px" , color: "gray"}}>
                 Company Name
                 </div>
-                <div style={{ fontSize: "14px", fontWeight:300 }}>
+                <div style={{ fontSize: "14px", fontWeight:300, textTransform: "capitalize" }}>
                     {job.jobRole}
                 </div>
-                <div  style={{ fontSize: "12px", fontWeight:500,}}>
+                <div  style={{ fontSize: "12px", fontWeight:500, textTransform: "capitalize"}}>
                     {job.location}
                 </div>
             </div>

@@ -92,7 +92,12 @@ export default function JobCard({ job }: { job: Job }) {
             color: "rgb(77, 89, 106)",
           }}
         >
-          Estimated Salary: ₹{job.minJdSalary} - {job.maxJdSalary} LPA
+          {job.minJdSalary &&
+            job.maxJdSalary &&
+            `Estimated Salary: ₹${job.minJdSalary} - ${job.maxJdSalary} LPA`}
+          {!(job.minJdSalary && job.maxJdSalary) &&
+            (job.minJdSalary || job.maxJdSalary) &&
+            `Estimated Salary: ₹${job.minJdSalary || job.maxJdSalary} LPA`}
         </div>
         <div
           style={{
@@ -127,7 +132,8 @@ export default function JobCard({ job }: { job: Job }) {
             margin: "0px",
           }}
         >
-          {job.minExp} {job.minExp != null ? "years" : "Experience not mentioned"}
+          {job.minExp}{" "}
+          {job.minExp != null ? "years" : "Experience not mentioned"}
         </h2>
         <ColorButton
           variant="contained"

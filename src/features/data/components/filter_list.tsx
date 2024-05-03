@@ -10,7 +10,7 @@ import {
 } from "../dataReducers"
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import FilterText from "./filter/filterText"
-import FilterSingleValue from "./filter/filterSinlgeVale"
+import FilterSingleValue from "./filter/filterSingleValue"
 const Filters = () => {
   const rolesFilters = [
     "frontend",

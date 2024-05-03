@@ -103,7 +103,7 @@ const filterState = (state: JobState) => {
     }
 }
 
-const dataSlice = createSlice({
+const jobSlice = createSlice({
     name: "data",
     initialState: initialState,
     reducers: {
@@ -186,5 +186,5 @@ const dataSlice = createSlice({
     }
 })
 
-export const { changeRoles, changeminExprience, changeminSalary, changelocation, changeRemote, changeCompanyName } = dataSlice.actions
-export default dataSlice.reducer
+export const { changeRoles, changeminExprience, changeminSalary, changelocation, changeRemote, changeCompanyName } = jobSlice.actions
+export default jobSlice.reducer

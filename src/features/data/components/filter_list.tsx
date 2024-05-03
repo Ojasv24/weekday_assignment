@@ -11,18 +11,20 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../app/hooks"
 import FilterText from "./filter/filterText"
 import FilterSingleValue from "./filter/filterSingleValue"
+
+const rolesFilters = [
+  "Frontend",
+  "Backend",
+  "Fullstack",
+  "Tech Lead",
+  "iOS",
+  "Android",
+]
+const minExpFilters = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+const minSalaryFilters = [0, 10, 20, 30, 40, 50, 60, 70]
+const workSiteFilters = ["Remote", "Onsite"]
+
 const Filters = () => {
-  const rolesFilters = [
-    "frontend",
-    "ios",
-    "android",
-    "backend",
-    "fullstack",
-    "tech lead",
-  ]
-  const minExpFilters = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-  const minSalaryFilters = [0, 10, 20, 30, 40, 50, 60, 70]
-  const workSiteFilters = ["Remote", "Onsite"]
   const dispatch = useAppDispatch()
   const { minSalary, minExperience, remote } = useAppSelector(
     state => state.data.filters,

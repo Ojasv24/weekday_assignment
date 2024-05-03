@@ -2,7 +2,7 @@ import { Chip } from "@mui/material"
 import { useAppSelector } from "../../../app/hooks"
 
 const SearchJobText = () => {
-  const { shownData } = useAppSelector(state => state.data)
+  const { shownJob: shownData } = useAppSelector(state => state.data)
   return (
     <div
       style={{
@@ -12,7 +12,13 @@ const SearchJobText = () => {
       }}
     >
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ alignSelf: "end", marginRight: "-30px", marginBottom: "-5px" }}>
+        <div
+          style={{
+            alignSelf: "end",
+            marginRight: "-30px",
+            marginBottom: "-5px",
+          }}
+        >
           <Chip
             size="small"
             label={shownData.length}

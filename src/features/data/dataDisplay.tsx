@@ -1,31 +1,31 @@
 import { useCallback, useEffect, useRef } from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { fetchDataAsync } from "./dataReducers"
+import { fetchJobAsync } from "./dataReducers"
 import { Job } from "./dataAPI"
 import { CircularProgress, Grid } from "@mui/material"
 import CardVariants from "./components/card"
 
-const DataDisplay = () => {
+const JobDisplay = () => {
   const dispatch = useAppDispatch()
-  const { loading, offset, hasMore, shownData } = useAppSelector(
+  const { loading, offset, hasMore, shownJob } = useAppSelector(
     state => state.data,
   )
   const loaderRef = useRef(null)
 
-  const fetchData = useCallback(async () => {
+  const fetchJob = useCallback(async () => {
     if (loading || !hasMore) return
-    dispatch(fetchDataAsync(offset))
+    dispatch(fetchJobAsync(offset))
   }, [dispatch, offset, loading, hasMore])
 
   useEffect(() => {
-    fetchData()
+    fetchJob()
   }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
       const target = entries[0]
       if (target.isIntersecting) {
-        fetchData()
+        fetchJob()
       }
     })
     if (loaderRef.current) {
@@ -36,12 +36,12 @@ const DataDisplay = () => {
         observer.unobserve(loaderRef.current)
       }
     }
-  }, [fetchData])
+  }, [fetchJob])
 
-  const renderData = shownData.map((data: Job) => {
+  const renderJob = shownJob.map((job: Job) => {
     return (
-      <Grid item key={data.jdUid}>
-        <CardVariants job={data} />
+      <Grid item key={job.jdUid}>
+        <CardVariants job={job} />
       </Grid>
     )
   })
@@ -56,7 +56,7 @@ const DataDisplay = () => {
           container
           spacing={8}
         >
-          {renderData}
+          {renderJob}
         </Grid>
       </div>
       <div style={{ alignSelf: "center" }} ref={loaderRef}>
@@ -66,4 +66,4 @@ const DataDisplay = () => {
   )
 }
 
-export default DataDisplay
+export default JobDisplay

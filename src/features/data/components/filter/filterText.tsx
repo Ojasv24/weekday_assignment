@@ -3,10 +3,16 @@ import { Autocomplete, Chip, TextField } from "@mui/material"
 interface FilterProps {
   minWidth?: number
   title: string
+  disabled: boolean
   onChange: (value: string[]) => void
 }
 
-export default function FilterText({ title, onChange, minWidth }: FilterProps) {
+export default function FilterText({
+  title,
+  onChange,
+  minWidth,
+  disabled,
+}: FilterProps) {
   return (
     <div style={{ padding: "10px", minWidth: minWidth }}>
       <Autocomplete
@@ -14,6 +20,7 @@ export default function FilterText({ title, onChange, minWidth }: FilterProps) {
         clearIcon={false}
         options={[]}
         freeSolo
+        disabled={disabled}
         multiple
         onChange={(_, value) => onChange(value)}
         renderTags={(value, props) =>

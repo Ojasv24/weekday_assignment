@@ -36,7 +36,7 @@ export default function JobCard({ job }: { job: Job }) {
           <img
             src={imageURl}
             alt="Company Logo"
-            style={{ width: "25px", height: "40px", objectFit: "cover" }}
+            style={{ width: "25px", height: "40px" }}
           />
           <div style={{ marginLeft: "10px" }}></div>
           <div
@@ -117,7 +117,7 @@ export default function JobCard({ job }: { job: Job }) {
             marginTop: "10px",
           }}
         >
-          {job.minExp != null ? "Minimum Experience" : null}
+          {"Minimum Experience"}
         </h3>
         <h2
           style={{
@@ -127,7 +127,7 @@ export default function JobCard({ job }: { job: Job }) {
             margin: "0px",
           }}
         >
-          {job.minExp} {job.minExp != null ? "years" : null}
+          {job.minExp} {job.minExp != null ? "years" : "Experience not mentioned"}
         </h2>
         <ColorButton
           variant="contained"

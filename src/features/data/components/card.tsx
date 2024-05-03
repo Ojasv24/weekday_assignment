@@ -1,8 +1,9 @@
-import { Box, Card, CardContent, Typography } from '@mui/joy';
+// import { Box, Card, CardContent, Typography } from '@mui/joy';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import * as React from 'react';
 import { Job } from '../dataAPI';
+import Card from '@mui/material/Card';
 // import Box from '@mui/joy/Box';
 // import Card from '@mui/joy/Card';
 // import CardContent from '@mui/joy/CardContent';
@@ -13,7 +14,7 @@ export default function CardVariants(job : Job) {
   return (
     //give shawdow
    
-      <Card variant="soft" sx={{ width: 300 ,   boxShadow: "0 3px 5px 2px rgba(0, 0, 0, .3)",backgroundColor: "white"}}>
+      <Card sx={{ width: 300 ,   boxShadow: "0 3px 5px 2px rgba(0, 0, 0, .3)",backgroundColor: "white", padding: "10px"}}>
         <div style={{display: "flex", flexDirection: "column"}}>
             
         <div style={{display: "flex", flexDirection: "row", }}>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { changeRoles, fetchDataAsync } from "./dataReducers";
 import { Job, JobList } from "./dataAPI";
@@ -13,15 +13,12 @@ import Tags from "./components/filter";
 const DataDisplay = () => {
     const dispatch = useAppDispatch();
     const data = useAppSelector((state) => state.data.shownData);
+    const isLoading = useAppSelector((state) => state.data.loading);
     const offset = useAppSelector((state) => state.data.offset);
     const [dataPresent, setDataPresent] = useState<boolean>(false);
-    const roles = useAppSelector((state) => state.data.filters.roles);
-    useEffect(() => {
-        if (!dataPresent) {
-            dispatch(fetchDataAsync(offset));
-            setDataPresent(true); 
-        }
-    },[])
+    const [index, setIndex] = useState(2);
+    const loaderRef = useRef(null);
+    
 
     const renderData = data.map((data: Job) => {
         return (

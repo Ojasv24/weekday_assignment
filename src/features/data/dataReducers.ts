@@ -15,10 +15,10 @@ export interface DataState {
 export interface Filters {
     roles: string[];
     location: string[];
-    minExperience?: number;
+    minExperience: number[];
     remote: string[];
     techStack: string[];
-    minSalary?: number;
+    minSalary: number[];
     companyName?: string;
 }
 
@@ -34,11 +34,11 @@ const initialState: DataState = {
     // Filter
     filters: {
         roles: [],
-        minExperience: undefined,
+        minExperience: [],
         location: [],
         remote: [],
         techStack: [],
-        minSalary: undefined,
+        minSalary: [],
         companyName: ""
     }
 }
@@ -54,36 +54,42 @@ export const fetchDataAsync = createAsyncThunk(
 )
 
 const filterData = (data: Job[], filters: Filters) => {
-    // return state.data;
-    var finalData: Job[] = [];
+    let finalData: Job[] = [...data];
+
     if (filters.roles.length > 0) {
-        finalData = data.filter((job) => {
-            return filters.roles.includes(job.jobRole.toLocaleLowerCase())
-        })
-        console.log(filters.roles);
-    }
-    if (filters.location.length > 0) {
-        finalData = data.filter((job) => {
-            return filters.location.includes(job.location.toLocaleLowerCase())
-        })
-    }
-    if (filters.minExperience !== undefined) {
-        finalData = data.filter((job) => {
-            return job.minExp >= filters.minExperience!
-        })
+        finalData = finalData.filter(job => filters.roles.some(role => role.toLowerCase().includes(job.jobRole.toLowerCase())));
     }
 
-    if (filters.minSalary !== undefined) {
-        finalData = data.filter((job) => {
-            if (job.minJdSalary === null) {
-                return job
-            }
-            return job.minJdSalary >= filters.minSalary!
-        })
+    if (filters.location.length > 0) {
+        finalData = finalData.filter(job => filters.location.some(location => job.location.toLowerCase().includes(location.toLowerCase())));
     }
-    if (finalData.length === 0) {
-        return data
+
+    if (filters.remote.length > 0) {
+        const isRemoteSelected = filters.remote.some(remote => remote.toLowerCase().includes("remote"));
+        const isOnsiteSelected = filters.remote.some(remote => remote.toLowerCase().includes("onsite"));
+
+        if (isRemoteSelected && isOnsiteSelected) {
+            finalData = data;
+        } else if (isRemoteSelected) {
+            finalData = finalData.filter(job => job.location.toLowerCase().includes("remote"));
+        } else if (isOnsiteSelected) {
+            finalData = finalData.filter(job => !job.location.toLowerCase().includes("remote"));
+        }
     }
+
+    if (filters.minExperience && filters.minExperience.length > 0) {
+        finalData = finalData.filter(job => {
+            return job.minExp !== null && filters.minExperience.some(exp => job.minExp! >= exp);
+        });
+    }
+
+    if (filters.minSalary && filters.minSalary.length > 0) {
+        finalData = finalData.filter(job => {
+            return job.minJdSalary !== null && filters.minSalary.some(salary => job.minJdSalary! >= salary);
+        });
+    }
+
+
     return finalData;
 }
 
@@ -100,7 +106,7 @@ const dataSlice = createSlice({
                 }
             }
         },
-        changeminExprience(state, action: { payload: number }) {
+        changeminExprience(state, action: { payload: number[] }) {
             return {
                 ...state,
                 filters: {
@@ -109,7 +115,7 @@ const dataSlice = createSlice({
                 }
             }
         },
-        changeminSalary(state, action: { payload: number }) {
+        changeminSalary(state, action: { payload: number[] }) {
             return {
                 ...state,
                 filters: {
@@ -124,6 +130,15 @@ const dataSlice = createSlice({
                 filters: {
                     ...state.filters,
                     location: action.payload
+                }
+            }
+        },
+        changeRemote(state, action: { payload: string[] }) {
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    remote: action.payload
                 }
             }
         },
@@ -156,5 +171,5 @@ const dataSlice = createSlice({
     }
 })
 
-export const { changeRoles, changeminExprience, changeminSalary, changelocation, reloadFilteredData } = dataSlice.actions
+export const { changeRoles, changeminExprience, changeminSalary, changelocation, reloadFilteredData, changeRemote } = dataSlice.actions
 export default dataSlice.reducer

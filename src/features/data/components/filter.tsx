@@ -1,9 +1,7 @@
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { changeRoles, reloadFilteredData } from '../dataReducers';
 
-export default function Filter(topRoles : string[], title: string, onChange: (value: any[]) => void) {
+export default function Filter(topRoles : any[], title: string, onChange: (value: any[]) => void) {
   // const dispatch = useAppDispatch(); 
   // (dispatch(), dispatch(reloadFilteredData([])))
   return (
